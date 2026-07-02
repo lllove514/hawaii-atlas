@@ -1,0 +1,15 @@
+# Raw downloads and heavy intermediates are reproducible from data-pipelines/
+# (multi-GB NetCDF, DEM tiles, shapefile releases) — never committed.
+data-pipelines/*/data/
+data-pipelines/*/processed/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS cruft
+.DS_Store
+
+# Local editor/agent settings
+.claude/
