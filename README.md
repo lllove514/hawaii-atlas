@@ -21,7 +21,7 @@ site runs as static files.
 | **[Reef Heat Atlas](reef-heat-atlas/)** | Daily sea-surface temperature and coral bleaching stress (Degree Heating Weeks) on a 5 km grid, 1985 to present, with SST, anomaly, and DHW layers, jumps to the big bleaching years, and a per-cell history sparkline. | NOAA Coral Reef Watch CoralTemp v3.1 (5 km daily), via the PacIOOS ERDDAP |
 | **[Lava Flow History](lava-flow-history/)** | Every mapped lava flow on Hawaiʻi Island, replayed in order over the terrain. Younger flows bury older ones, ending with the 2022 Mauna Loa eruption. Includes landmark eruptions, an Age/Volcano toggle, and a running count of km² resurfaced. | USGS DS-144 geologic map (Wolfe & Morris; Trusdell), four USGS flow releases 2014 to 2022, USGS 3DEP elevation |
 | **[Ahupuaʻa Watersheds](ahupuaa-watersheds/)** | The traditional land divisions of Oʻahu compared against watersheds computed by D8 flow routing on a 10 m DEM. A Match mode scores how well each ahupuaʻa tracks a single computed watershed. | State of Hawaiʻi Statewide GIS (OHA/DLNR) boundaries, USGS 3DEP 1/3″ elevation |
-| **[Rainfall Gradient Explorer](rainfall-gradient/)** | *Coming soon.* The islands' windward/leeward rainfall gradients. | |
+| **[Rainfall Gradient Explorer](rainfall-gradient/)** | Monthly rainfall interpolated from 764 weather stations, per island, as a scrubbable typical year plus a 2011 to 2025 time series. Click an island for its wettest and driest points. | NOAA GHCN-Daily station records, via NCEI |
 
 The hub page (`index.html`) ties them together.
 
@@ -33,8 +33,8 @@ shared/               shared design tokens, chrome, and hub thumbnails
 reef-heat-atlas/      each map's front end: index.html + app.js + style.css
 lava-flow-history/
 ahupuaa-watersheds/
-rainfall-gradient/    placeholder for the fourth map
-data/                 the compact, committed browser payloads (about 15 MB total)
+rainfall-gradient/
+data/                 the compact, committed browser payloads (about 20 MB total)
 data-pipelines/       the Python that builds data/ from the raw sources,
                       one folder per map, each with its own README and QA notes
 ```
@@ -50,8 +50,9 @@ by the pipelines.
   gzipped integer grids and inflates them in the browser with the native
   `DecompressionStream`; the lava map ships two indexed PNGs and a timeline
   JSON; the watershed map ships raster underlays plus GeoJSON vectors.
-- The pipelines are plain Python: numpy, xarray, and netCDF4 for the reef map,
-  geopandas, rasterio, shapely, and pysheds for the other two. Downloads and
+- The pipelines are plain Python: numpy, xarray, and netCDF4 for the reef map;
+  geopandas, rasterio, shapely, and pysheds for the lava and watershed maps;
+  numpy and scipy for the rainfall map. Downloads and
   compute steps resume if interrupted. Each pipeline ends with a verification
   script that decodes the shipped payload and checks it against the source
   data.
@@ -96,8 +97,15 @@ the `main` branch root. No build step.
   from computed drainage is a finding rather than an error. A few tiny coastal
   parcels are labeled as too small to resolve. Only Oʻahu ships processed; the
   pipeline takes one config change per additional island.
-- **General:** the reef record ends at whatever day NOAA had published when
-  the pipeline last ran. Re-run `download.py` to refresh.
+- **Rainfall:** stations cluster on coasts and in valleys, so the wettest
+  ridges are under-sampled and peak rainfall is understated; IDW has no
+  notion of terrain, so isolated stations leave bullseyes; Niʻihau and
+  Kahoʻolawe have almost no qualifying stations and render mostly blank. The
+  climatology averages each station's own record length rather than a fixed
+  normal period.
+- **General:** the reef and rainfall records end at whatever NOAA had
+  published when the pipelines last ran. Re-run their download steps to
+  refresh.
 
 Per-map methods, verification evidence, and fuller limitation notes live in
 each `data-pipelines/<map>/README.md` and `QA.md`. `AUDIT.md` documents the
@@ -110,4 +118,5 @@ I-2524A *Digital Database of the Geologic Map of the Island of Hawaiʻi*;
 USGS ScienceBase flow releases (June 27th flow, Puʻuʻōʻō episode 61g, 2018
 lower East Rift Zone, 2022 Mauna Loa); USGS 3DEP elevation; State of Hawaiʻi
 Statewide GIS Program (ahupuaʻa boundaries, sourced from OHA with DLNR/SHPD
-corrections).
+corrections); NOAA GHCN-Daily station records via NCEI; Natural Earth 10 m
+coastlines.

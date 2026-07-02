@@ -5,30 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rainfall Gradient Explorer · Hawaiʻi Atlas</title>
 <link rel="stylesheet" href="../shared/atlas.css">
-<style>
-  :root { --accent: #7a96ff; }
-  body { display: flex; align-items: center; justify-content: center; }
-  .placeholder {
-    max-width: 480px; padding: 28px 32px; text-align: left;
-    background:
-      radial-gradient(120% 160% at 10% 0%, rgba(122,150,255,0.14) 0%, transparent 55%),
-      var(--panel);
-  }
-  h1 { font-size: 24px; margin: 10px 0 12px; }
-  p { color: var(--ink-dim); font-size: 14px; line-height: 1.6; margin: 0 0 12px; }
-  .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--accent); }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="placeholder panel">
-    <a class="atlas-home" href="../">Hawaiʻi Atlas</a>
-    <h1>Rainfall Gradient Explorer</h1>
-    <p class="tag">In progress</p>
-    <p>Windward slopes on the islands catch some of the heaviest rainfall on
-       Earth, while leeward coasts a few miles away sit in near-desert. This
-       map will trace those gradients across each island.</p>
-    <p>The other three maps are live from the atlas page.</p>
-  </div>
+<div id="app">
+  <header>
+    <div class="title">
+      <a class="atlas-home" href="../">Hawaiʻi Atlas</a>
+      <h1>Rainfall Gradient Explorer</h1>
+      <p>NOAA GHCN-Daily station records · inverse-distance interpolation</p>
+    </div>
+    <div class="modes seg">
+      <button id="mode-clim" class="mode active">Typical year</button>
+      <button id="mode-ts" class="mode">Time series</button>
+    </div>
+  </header>
+
+  <main>
+    <canvas id="map" role="img" aria-label="Interpolated monthly rainfall across the Hawaiian Islands"></canvas>
+
+    <div id="readout" class="panel">
+      <div class="ro-place">Move over the map</div>
+      <div class="ro-value">&nbsp;</div>
+      <div class="ro-station">&nbsp;</div>
+    </div>
+
+    <div id="surprise" class="panel hidden">
+      <button class="close" title="dismiss">×</button>
+      <div class="sp-island">—</div>
+      <div class="sp-row"><span class="sp-wet">wettest</span><b class="sp-wetv"></b></div>
+      <div class="sp-row"><span class="sp-dry">driest</span><b class="sp-dryv"></b></div>
+      <div class="sp-ratio"></div>
+      <div class="sp-hint">gradient across one island, this month</div>
+    </div>
+
+    <div id="legend" class="panel">
+      <div class="lg-title">rainfall · mm/month</div>
+      <canvas id="legend-bar" width="200" height="12"></canvas>
+      <div class="lg-ticks"><span id="lg-lo">0</span><span id="lg-mid"></span><span id="lg-hi"></span></div>
+      <div class="lg-note">unshaded land = no qualifying stations that month</div>
+    </div>
+
+    <div id="conf" class="badge hidden">low confidence — few stations</div>
+  </main>
+
+  <footer>
+    <button id="play" title="sweep the year">▶</button>
+    <div class="slider">
+      <input id="month" class="scrub" type="range" min="0" max="11" value="0" step="1">
+      <div class="stamp" id="stamp">January</div>
+    </div>
+    <div class="slider yearonly hidden">
+      <input id="year" class="scrub" type="range" min="0" max="0" value="0" step="1">
+      <div class="stamp" id="year-stamp"></div>
+    </div>
+    <div class="scale">
+      <label for="vmax">scale max</label>
+      <input id="vmax" class="scrub" type="range" min="50" max="2000" value="600" step="10">
+      <span id="vmax-val">600 mm</span>
+    </div>
+  </footer>
+</div>
+<script src="app.js"></script>
 </body>
 </html>

@@ -285,3 +285,120 @@ captions, ahupuaʻa lede and footer caveat, mismatch list), the lava
 timeline.json payload plus its exporter, and this file. Verbatim quotes of old
 buggy UI text were left as quotes. The lava payload was re-serialized with the
 exporter's own json.dump settings so a pipeline re-run reproduces it.
+
+## Rainfall integration, Phase 0: assessment of `_incoming-rainfall`
+
+State as dropped in:
+
+- **Layout** mirrors the other projects: `web/` (index/app/style), `scripts/`
+  (six Python files), `data/` (297 MB raw: 803 GHCN-Daily `.dly` station
+  files, station list, coastlines), `processed/`, `README.md`, `QA.md`.
+- **Pipeline was half-run.** Stage 1 (download + monthly aggregation) had
+  completed: all 803 station files on disk, 764 stations kept, 238,773
+  station-months spanning 1899 to 2026, summary and QA both written. Stages 2
+  and 3 (IDW interpolation, web export) had never been run, so the app had no
+  payload and showed a blank page.
+- **Ran the remaining stages** with the project's own venv. Interpolation
+  produced 12 climatology surfaces (0.02°) and 180 monthly time-series
+  surfaces (2011 to 2025, 0.04°); its built-in checks pass (windward >
+  leeward on Hawaiʻi, Oʻahu, and Kauaʻi; all surfaces non-negative). Export
+  packed a 5.5 MB `web/data/` payload with round-trip checks against the
+  `.npy` surfaces.
+- **App verified working** end to end: climatology renders for all eight
+  islands, month scrub and play work, time-series mode enables itself when
+  its files exist (2011 start), clicking an island reports its wettest and
+  driest cells (Hawaiʻi: 17.4x in January 2011), hover readout shows value
+  plus nearest station. Islands or months with no qualifying stations render
+  blank, and sparse months carry a low-confidence badge.
+- **Junk / tells to remove:** `3-rainfall-gradient-explorer.md` (build
+  prompt), `.venv/` (161 MB), `.claude/`, `scripts/__pycache__/`, a stale
+  `.gitignore`, a broken image placeholder in the README, and README prose
+  with the same patterns cleaned elsewhere ("Why it matters", "Limitations
+  (honest)", em-dash asides, "keeps each island's gradient honest").
+- **Design:** its own near-miss dark theme (different tokens, own slider and
+  panel styles, no shared stylesheet, no home chip). Needs the Phase 2
+  conformance pass.
+- **Genuinely incomplete, to label:** the time-series window ends at 2025
+  and the climatology mixes record lengths (period-of-record, not a fixed
+  normal period); both are documented limitations rather than bugs. Nothing
+  in the app fakes missing data.
+
+**GATE 0: PASS.** Real state documented; the app runs against a fully built
+payload produced by its own pipeline.
+
+## Rainfall integration, Phase 1: fold into the structure
+
+- Front end moved into `rainfall-gradient/` (the placeholder page and its
+  README were replaced); payload moved to `data/rainfall-gradient/` (5.4 MB);
+  pipeline moved to `data-pipelines/rainfall-gradient/` with its raw `data/`
+  and `processed/` alongside, matching the other three projects exactly.
+- Deleted on the way in: the build-prompt doc, a 161 MB `.venv`, `.claude/`,
+  `__pycache__`, and the stale per-project `.gitignore`. `_incoming-rainfall/`
+  removed.
+- `app.js` fetches retargeted to `../data/rainfall-gradient/`;
+  `export_web.py` retargeted to write there. Scripts compile; app parses.
+
+**GATE 1: PASS.** Rainfall loads from its final slot through the nested
+subpath server; reef, lava, and ahupuaʻa re-verified unchanged.
+
+## Rainfall integration, Phase 2: conform to the repo rules
+
+- Relative paths held up under `/hawaii-atlas/rainfall-gradient/` (the app
+  was exercised through the nested server: month scrub, hover readout with
+  nearest station, ocean/no-data cases).
+- Restyled onto `shared/atlas.css`: shared tokens, serif title, home chip,
+  segmented mode toggle, shared scrub sliders, aria-labelled canvas, a
+  narrow-window pass. Accent set to the rain blue its hub card already used.
+- Data hygiene proven with `git check-ignore` and a dry-run add: the 297 MB
+  of `.dly` files and the intermediates stay out; only scripts, docs, and the
+  5.4 MB payload go in. Island names in the payload carry correct ʻokina and
+  macrons (station names are GHCN's own uppercase ASCII).
+
+**GATE 2: PASS.**
+
+## Rainfall integration, Phase 3: labeling what is partial
+
+- The app already carried the right instincts: sparse months show a
+  low-confidence badge, unstationed islands and months render blank rather
+  than interpolated over, and the hover readout names the nearest station and
+  distance so measured versus interpolated is visible. Added a legend note
+  ("unshaded land = no qualifying stations that month") so the blank state of
+  Niʻihau and Kahoʻolawe reads as data honesty rather than a bug.
+- Hub card replaced: real thumbnail (March climatology), plain description,
+  GHCN-Daily source tag. No "in progress" tag, because after running the
+  pipeline's own remaining stages nothing in the app is stubbed or faked; the
+  genuine gaps (sparse ridges, blank islands, period-of-record climatology,
+  time series ending 2025) are stated in the UI, the pipeline README, and the
+  top README instead.
+
+**GATE 3: PASS.** All four cards link to working maps; gaps are labeled, not
+hidden.
+
+## Rainfall integration, Phase 4: improvements
+
+| Candidate | Verdict | Rationale |
+|-----------|---------|-----------|
+| Keyboard bindings (space to play, arrows for month) | **Built** | Matches the reef map's bindings; six lines. |
+| Legend coverage note | **Built** (part of Phase 3) | The blank-island state needed a one-line explanation. |
+| Kriging / terrain covariates | Skip | The pipeline README documents it as the upgrade path; a real change of method, not a polish item. |
+| Shared island selector across maps | Skip | Only two maps are per-island in any sense, and their island models differ (processed-vs-not for watersheds, click-an-island here). A shared control would be chrome without shared behavior. |
+
+**GATE 4: PASS.**
+
+## Rainfall integration, Phase 5: docs and final state
+
+- Pipeline README rewritten for the new layout, in the repo's plain style,
+  with the build's real numbers (764 of 803 stations, 1899 to 2026 records,
+  time series 2011 to 2025, 5.4 MB payload) and a limitations section that
+  includes the blank islands. Broken image placeholder removed. QA headers
+  and the script strings that write them now match.
+- App-folder README added; top README table, tech notes, limitations, and
+  credits cover the fourth map; hub card is live.
+- Final checks: hub + all four apps exercised through the nested
+  `/hawaii-atlas/` subpath (rainfall island-click on Oʻahu: wettest 18.2x the
+  driest; reef, lava, ahupuaʻa unchanged); `git check-ignore` proves the
+  297 MB of raw `.dly` files and intermediates stay out of git.
+
+Final state: four working maps behind one hub, one design system, all paths
+relative and Pages-ready; committed payload about 20 MB; every dataset
+reproducible from its pipeline; nothing overstated.
