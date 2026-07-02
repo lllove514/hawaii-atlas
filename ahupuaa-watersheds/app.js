@@ -450,10 +450,10 @@ function listMismatches() {
   const items = state.mismatches.map(f => {
     const p = f.properties;
     return `<li data-name="${esc(p.ahupuaa)}"><span class="swatch" style="background:${matchColor(p)}"></span>`
-      + `${esc(p.ahupuaa)} — ${Math.round(p.dom_frac * 100)}% one basin, splits across ${p.n_basins}</li>`;
+      + `${esc(p.ahupuaa)} · ${Math.round(p.dom_frac * 100)}% in one basin, across ${p.n_basins}</li>`;
   }).join("");
   el.innerHTML = `<div class="name" style="font-size:16px">Biggest mismatches</div>`
-    + `<div class="where">Boundaries that span several computed watersheds — the cases worth discussing.</div>`
+    + `<div class="where">Boundaries that span several computed watersheds.</div>`
     + `<ol>${items}</ol>`;
   el.querySelectorAll("li").forEach(li => li.addEventListener("click", () => {
     const f = ahupuaa.find(ft => ft.properties.ahupuaa === li.dataset.name);

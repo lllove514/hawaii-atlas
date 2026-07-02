@@ -61,9 +61,9 @@ VOLCANOES = {
 # DS-144 calendar year (the 1800-1801 Hualalai Huʻehuʻe flow is dated 1800).
 LANDMARKS = [
     {"year": 1790, "name": "1790 Kīlauea",  "vol": 1,
-     "blurb": "Explosive summit eruption — the deadliest in Hawaiʻi’s recorded history."},
+     "blurb": "Explosive summit eruption, the deadliest in Hawaiʻi’s recorded history."},
     {"year": 1800, "name": "1800 Hualālai", "vol": 3,
-     "blurb": "The Huʻehuʻe flow — Hualālai’s last eruption — reached the Kona coast."},
+     "blurb": "The Huʻehuʻe flow, from Hualālai’s last eruption, reached the Kona coast."},
     {"year": 1859, "name": "1859 Mauna Loa", "vol": 2,
      "blurb": "Longest historic Mauna Loa flow; ran to the sea north of Kona."},
     {"year": 1935, "name": "1935 Mauna Loa", "vol": 2,
@@ -71,7 +71,7 @@ LANDMARKS = [
     {"year": 1984, "name": "1984 Mauna Loa", "vol": 2,
      "blurb": "Stopped about 7 km short of Hilo; the volcano then slept 38 years."},
     {"year": 2018, "name": "2018 Kīlauea LERZ", "vol": 1,
-     "blurb": "Lower East Rift Zone — buried Kapoho, built new land at the coast."},
+     "blurb": "Lower East Rift Zone eruption. It buried Kapoho and built new land at the coast."},
     {"year": 2022, "name": "2022 Mauna Loa", "vol": 2,
      "blurb": "First eruption since 1984; the Northeast Rift Zone flow toward Saddle Road."},
 ]
@@ -79,17 +79,17 @@ LANDMARKS = [
 # Narrative eras, oldest -> youngest, selected by the frontier's age in years.
 ERAS = [
     {"name": "Ancient shields", "max_ago": 10_000_000, "min_ago": 65_000,
-     "caption": "Building the island — the Kohala and Mauna Kea shields, hundreds of thousands of years ago."},
+     "caption": "The Kohala and Mauna Kea shields take shape, hundreds of thousands of years ago."},
     {"name": "Ice-age flows", "max_ago": 65_000, "min_ago": 10_000,
-     "caption": "Late-Pleistocene flows — Mauna Kea’s Laupāhoehoe lavas and early Mauna Loa."},
+     "caption": "Late-Pleistocene flows: Mauna Kea’s Laupāhoehoe lavas and early Mauna Loa."},
     {"name": "Early Holocene", "max_ago": 10_000, "min_ago": 3_000,
      "caption": "Early-Holocene resurfacing across Mauna Loa, Kīlauea and Hualālai."},
     {"name": "Late Holocene", "max_ago": 3_000, "min_ago": 750,
      "caption": "Late-Holocene flows repave the active volcanoes’ flanks."},
     {"name": "Pre-contact", "max_ago": 750, "min_ago": 237,
-     "caption": "Pre-contact centuries — flows a few hundred years old."},
+     "caption": "Flows from the few centuries before European contact."},
     {"name": "Historic era", "max_ago": 237, "min_ago": -1,
-     "caption": "Historic era — A.D. 1790 to 2022, the eruptions we have watched."},
+     "caption": "The historic era, A.D. 1790 to 2022."},
 ]
 
 

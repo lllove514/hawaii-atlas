@@ -82,21 +82,18 @@
 
   <section class="story">
     <p>
-      I have family in Hawaiʻi, and a trip to visit them turned into this
-      project. The islands are full of data hiding in plain sight: warm water
-      sitting over the reefs, fresh black rock on the Big Island&rsquo;s flanks,
-      ahupuaʻa names on road signs marking land divisions far older than any
-      modern survey. Back home, I started pulling the public records behind
-      what I&rsquo;d been standing on &mdash; NOAA satellites, USGS geology and
-      elevation, the state GIS &mdash; and building the maps I wished I&rsquo;d
-      had while I was there.
+      I have family in Hawaiʻi. After a visit, I wanted maps of some of the
+      things I&rsquo;d been looking at: how hot the water over the reefs
+      actually gets, how much of the Big Island is rock younger than the towns
+      built on it, why the old land divisions run from the ridgelines down to
+      the sea. The data behind all of it is public. NOAA, the USGS, and the
+      state GIS office publish it, and these pages draw it.
     </p>
-    <!-- Room for a personal line here — who you visited, which islands, a photo. -->
+    <!-- Room for a personal line here (who you visited, which islands, a photo). -->
     <p class="quiet">
-      Every map is hand-built: vanilla JavaScript drawing on a canvas &mdash; no
-      map library, no framework, no build step &mdash; with a small, documented
-      Python pipeline turning each raw dataset into the compact files the
-      browser loads. The whole site is static.
+      Each map is plain JavaScript drawing on a canvas element, with no map
+      library and no build step. A small Python pipeline turns the raw data
+      into the files the browser loads. The whole site is static.
     </p>
   </section>
 
@@ -105,10 +102,9 @@
       <div class="thumb"><img src="shared/thumbs/reef.jpg" alt="Degree Heating Weeks around the Hawaiian Islands during the 2015 marine heatwave"></div>
       <div class="body">
         <h2>Reef Heat Atlas</h2>
-        <p class="what">Four decades of daily sea-surface temperature and
-          coral-bleaching heat stress, one 5&nbsp;km pixel at a time. Scrub
-          through 1985&ndash;present and watch the 2015 and 2019 marine
-          heatwaves build.</p>
+        <p class="what">Daily sea-surface temperature and coral bleaching
+          stress on a 5&nbsp;km grid, 1985 to present. The 2015 and 2019
+          marine heatwaves are easy to find.</p>
         <div class="meta"><span class="island">All islands</span><span>NOAA Coral Reef Watch</span></div>
       </div>
     </a>
@@ -117,9 +113,9 @@
       <div class="thumb"><img src="shared/thumbs/lava.jpg" alt="Age-coloured lava flows of Hawaiʻi Island over a hillshade"></div>
       <div class="body">
         <h2>Lava Flow History</h2>
-        <p class="what">Every recorded lava flow on Hawaiʻi Island, animated
-          oldest to newest over real terrain &mdash; younger flows burying older
-          ones, from ancient shields to the 2022 Mauna Loa eruption.</p>
+        <p class="what">Every mapped lava flow on Hawaiʻi Island, replayed
+          in order over the terrain. Younger flows bury older ones, ending
+          with the 2022 Mauna Loa eruption.</p>
         <div class="meta"><span class="island">Hawaiʻi Island</span><span>USGS DS-144 + 3DEP</span></div>
       </div>
     </a>
@@ -128,9 +124,9 @@
       <div class="thumb"><img src="shared/thumbs/ahupuaa.jpg" alt="Ahupuaʻa boundaries over computed watersheds and streams on Oʻahu"></div>
       <div class="body">
         <h2>Ahupuaʻa Watersheds</h2>
-        <p class="what">Traditional mauka-to-makai land divisions laid over
-          watersheds computed from a 10&nbsp;m elevation model &mdash; see where
-          the old boundaries and the actual drainage agree, and where they part.</p>
+        <p class="what">The traditional land divisions of Oʻahu compared
+          against watersheds computed from a 10&nbsp;m elevation model. Many
+          line up closely. Some don&rsquo;t.</p>
         <div class="meta"><span class="island">Oʻahu</span><span>Hawaiʻi GIS + USGS 3DEP</span></div>
       </div>
     </a>
@@ -139,8 +135,8 @@
       <div class="thumb">Coming&nbsp;soon</div>
       <div class="body">
         <h2>Rainfall Gradient Explorer</h2>
-        <p class="what">Desert to one of the wettest places on Earth in a few
-          miles &mdash; the islands&rsquo; extreme rainfall gradients, mapped.</p>
+        <p class="what">Some of the wettest ground on Earth sits a few miles
+          from near-desert. This map traces the gradients between them.</p>
         <div class="meta"><span class="island">All islands</span><span>In progress</span></div>
       </div>
     </a>
@@ -150,9 +146,9 @@
     <p>Data: NOAA Coral Reef Watch CoralTemp; USGS DS-144 geologic map of the
        Island of Hawaiʻi, USGS flow data releases 2014&ndash;2022, and USGS 3DEP
        elevation; State of Hawaiʻi Statewide GIS Program (OHA/DLNR) ahupuaʻa
-       boundaries. Full sources and methods are documented with each map&rsquo;s
+       boundaries. Sources and methods are documented with each map&rsquo;s
        pipeline.</p>
-    <p>Built by hand &mdash; canvas, vanilla JS, and Python.</p>
+    <p>Canvas, plain JavaScript, and Python.</p>
   </footer>
 </div>
 </body>

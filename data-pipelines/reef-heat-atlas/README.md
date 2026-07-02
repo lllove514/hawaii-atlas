@@ -6,28 +6,28 @@ data. Scrub four decades of daily observations, toggle between raw temperature
 and accumulated heat stress (Degree Heating Weeks), and read the exact value at
 any reef cell.
 
-The front end is vanilla JavaScript on a `<canvas>` — no map library, no build
-step. The processing is a handful of dependency-light Python scripts.
+The front end is vanilla JavaScript on a `<canvas>`, with no map library and no
+build step. The processing is a handful of dependency-light Python scripts.
 
 | Sea-surface temperature | Bleaching heat stress (DHW), Sept 2015 |
 |---|---|
 | ![SST layer](docs/sst.png) | ![DHW layer](docs/dhw.png) |
 
-Every 5 km cell is drawn as a flat, quantised colour block with hard edges — the
-data shares one consistent pixel aesthetic with the islands. A third layer shows
+Every 5 km cell is drawn as a flat, quantised colour block with hard edges, so
+the data and the islands share one pixel look. A third layer shows
 the SST **anomaly** (each pixel minus its own day-of-year mean), which strips the
 seasonal cycle and reveals real spatial structure:
 
 ![SST anomaly layer](docs/anomaly.png)
 
-## Why it matters
+## Background
 
 When ocean temperature stays above a reef's normal summer maximum for weeks, the
 accumulated heat drives corals to expel their symbiotic algae and bleach. NOAA
 Coral Reef Watch quantifies that accumulated stress as **Degree Heating Weeks
 (DHW)**. DHW ≥ 4 °C-weeks means significant bleaching is likely; DHW ≥ 8 means
-severe bleaching and mortality are likely. Hawaii saw major bleaching in 2014,
-2015, and 2019 — all visible in this record.
+severe bleaching and mortality are likely. Hawaiʻi saw major bleaching in 2014,
+2015, and 2019, and all three events show up in this record.
 
 ## Data source
 
@@ -46,7 +46,7 @@ severe bleaching and mortality are likely. Hawaii saw major bleaching in 2014,
 
 Per pixel:
 
-- **MMM** — Maximum Monthly Mean climatology: the warmest of the 12 monthly-mean
+- **MMM**, the Maximum Monthly Mean climatology: the warmest of the 12 monthly-mean
   SST values over CRW's baseline. We take CRW's **official** MMM directly:
   CRW publishes HotSpot *unclamped*, so `MMM = SST − HotSpot` recovers it exactly
   and identically on any day (verified time-invariant to 0.0000 °C). Baseline is
@@ -58,7 +58,7 @@ Per pixel:
 - **Risk thresholds:** DHW ≥ 4 (significant), DHW ≥ 8 (severe), as CRW defines.
 
 DHW is computed on the daily series with a date-aware rolling 84-day window
-(robust to occasional missing days), keeping memory bounded — the full 40-year
+(robust to occasional missing days), keeping memory bounded. The full 40-year
 daily stack is never held in RAM at once.
 
 **Validation:** our DHW is cross-checked against CRW's published `CRW_DHW` on
@@ -71,23 +71,23 @@ spot dates (see [QA.md](QA.md)); they agree to well under 1 °C-week RMSE.
 conda create -n reef -c conda-forge python=3.12 xarray netCDF4 numpy requests
 conda activate reef
 
-# 2. Discover + verify the endpoint, fetch one day (Phase 0 gate)
+# 2. Discover and verify the endpoint, fetch one day
 python scripts/discover_source.py
 
-# 3. Bulk download the daily SST record, one file per year (Phase 1 gate)
+# 3. Bulk download the daily SST record, one file per year
 #    Resumable: re-running skips years already on disk.
 python scripts/download.py
 
-# 4. Compute MMM, HotSpot, DHW; write weekly grids + metadata (Phase 2 gate)
+# 4. Compute MMM, HotSpot, DHW; write weekly grids + metadata
 python scripts/compute_dhw.py
 
 # 5. Cross-check our DHW against CRW's published DHW
 python scripts/verify_crw.py
 
-# 6. Pack the compact browser payload (Phase 3 gate)
+# 6. Pack the compact browser payload
 python scripts/build_web.py
 
-# 7. Confirm the payload decodes to the same numbers the app shows (Phase 4 gate)
+# 7. Confirm the payload decodes to the same numbers the app shows
 python scripts/verify_web.py
 
 # 8. Serve the whole atlas and open the map
@@ -108,7 +108,7 @@ leaves a truncated file that a later run mistakes for complete.
 ## Repository layout
 
 ```
-scripts/               (this folder — the pipeline)
+scripts/               (this folder holds the pipeline)
   config.py            # all config: endpoint, years, bbox, thresholds, paths
   common.py            # ERDDAP URLs, resumable/atomic download, sanity checks
   discover_source.py   # find & verify endpoint, one-day crop
@@ -153,10 +153,10 @@ pixel = one cell); larger values bin cells into coarser display blocks.
   (`WEB_STRIDE_DAYS` in `config.py`); gzipped it is ~9 MB. DHW is still
   computed daily; only the stored/displayed frames are weekly.
 - **Lossy web quantisation.** SST is stored as Int16 at 0.05 °C; DHW as UInt8 at
-  0.1 °C-week (ceiling 25 °C-weeks — ample for Hawaii). The Python `processed/`
+  0.1 °C-week (ceiling 25 °C-weeks, ample for Hawaiʻi). The Python `processed/`
   NetCDF keeps full float precision.
 - **Blocky coastline.** Island outlines are traced from the 5 km land mask, so
-  they are pixelated at 5 km — honest to the data resolution, but not a
+  they are pixelated at 5 km. That matches the data resolution, but it is not a
   cartographic coastline. A fuller version would overlay a vector shoreline.
   Isolated single-cell land specks (lone reef rocks) are removed so they don't
   read as stray pixels; multi-cell islands are untouched.

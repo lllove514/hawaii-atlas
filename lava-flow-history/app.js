@@ -53,7 +53,7 @@ async function init() {
   meta = await (await fetch("../data/lava-flow-history/timeline.json")).json();
   W = meta.width; H = meta.height; N = meta.n_eras; now = meta.now;
   timeline = meta.timeline;
-  els.credit.textContent = "Data — " + meta.credit;
+  els.credit.textContent = "Data: " + meta.credit;
 
   const [hillImg, flowImg] = await Promise.all([
     loadImage("../data/lava-flow-history/hillshade.png"), loadImage("../data/lava-flow-history/flow_age.png"),
@@ -205,8 +205,8 @@ function updateHud() {
     els.caption.innerHTML = `★ <b>${lm.name}</b> — ${lm.blurb}`;
   } else if (mode === "volcano") {
     const top = Object.entries(volShare).sort((a, b) => b[1] - a[1])[0];
-    els.caption.innerHTML = `Five shield volcanoes built the island — ` +
-      `<b>${meta.volcanoes[top[0]].name}</b> alone paved ${Math.round(top[1] * 100)}% of its surface.`;
+    els.caption.innerHTML = `Five shield volcanoes built the island. ` +
+      `<b>${meta.volcanoes[top[0]].name}</b> alone paved ${Math.round(top[1] * 100)}% of the surface.`;
   } else {
     els.caption.textContent = eraCaption(e.years_ago);
   }
