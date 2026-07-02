@@ -1,0 +1,128 @@
+/* Hawaiʻi Atlas — shared design tokens and chrome.
+   Each map keeps its own palette and accent; everything structural —
+   background scale, type, panels, buttons, sliders — comes from here. */
+
+:root {
+  --bg: #0b0f15;
+  --bg-deep: #05070a;
+  --panel: #131a24;
+  --panel-2: #0e141c;
+  --panel-glass: rgba(19, 26, 36, 0.88);
+  --line: #263141;
+  --ink: #e8edf4;
+  --ink-dim: #94a3b5;
+  --accent: #4bb3d4;            /* overridden per map */
+  --on-accent: #081820;         /* text on accent-filled controls */
+  --serif: "Iowan Old Style", "Palatino", Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em; }
+
+/* --- panels ----------------------------------------------------------- */
+
+.panel {
+  background: var(--panel-glass);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  backdrop-filter: blur(5px);
+}
+
+/* --- buttons ---------------------------------------------------------- */
+
+button {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+button:hover { border-color: var(--accent); }
+button.on, button[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* segmented toggle: buttons fused into one control */
+.seg { display: flex; }
+.seg button { border-radius: 0; border-right-width: 0; }
+.seg button:first-child { border-radius: 6px 0 0 6px; }
+.seg button:last-child { border-radius: 0 6px 6px 0; border-right-width: 1px; }
+
+/* --- form controls ---------------------------------------------------- */
+
+select, input[type="text"] {
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-family: var(--sans);
+  font-size: 13px;
+}
+select:focus, input[type="text"]:focus { outline: 1px solid var(--accent); }
+
+input[type="range"] { accent-color: var(--accent); }
+input[type="checkbox"] { accent-color: var(--accent); }
+
+/* the time/opacity scrubber every map shares */
+input[type="range"].scrub {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--line);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"].scrub::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+}
+input[type="range"].scrub::-moz-range-thumb {
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+}
+
+/* --- "part of the atlas" home chip ------------------------------------ */
+
+.atlas-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.atlas-home::before { content: "◂"; font-size: 12px; color: var(--accent); }
+.atlas-home:hover { color: var(--accent); }

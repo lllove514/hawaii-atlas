@@ -1,0 +1,87 @@
+/* Lava Flow History — app-specific layout over shared/atlas.css. */
+
+:root { --accent: #f4a24a; --on-accent: #12141a; --hot: #ffe08a; }
+
+[hidden] { display: none !important; }   /* beats the display rules below */
+body { overflow: hidden; }
+
+#app { height: 100vh; display: flex; flex-direction: column; }
+
+/* --- stage: fills the viewport; everything else overlays it --- */
+#stage { position: relative; flex: 1; min-height: 0; background: #000;
+  overflow: hidden; }
+canvas#map { position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: contain; display: block; cursor: crosshair; }
+
+/* --- title card (top-left) --- */
+#titlecard { position: absolute; top: 14px; left: 16px; max-width: 340px;
+  padding: 10px 13px; z-index: 3; }
+#titlecard h1 { font-size: 18px; margin: 0; }
+#titlecard p { margin: 5px 0 0; font-size: 12px; line-height: 1.4; color: var(--ink-dim); }
+#titlecard .atlas-home { margin-bottom: 6px; }
+
+/* --- legend (top-right) --- */
+#legendbox { position: absolute; top: 14px; right: 16px; width: 216px;
+  padding: 10px 12px; z-index: 3; }
+.modes { margin-bottom: 9px; }
+.modes button { flex: 1; }
+#colorbar { height: 12px; border-radius: 2px; border: 1px solid rgba(255,255,255,.12); }
+#colorbar-ticks { position: relative; height: 30px; margin-top: 3px; }
+#colorbar-ticks .tick { position: absolute; top: 0; transform: translateX(-50%);
+  font-family: var(--mono); font-size: 10px; color: var(--ink-dim); white-space: nowrap;
+  text-align: center; }
+#colorbar-ticks .tick::before { content: ""; display: block; width: 1px; height: 4px;
+  background: var(--line); margin: 0 auto 2px; }
+#legend-volcano { display: grid; gap: 5px; }
+#legend-volcano .row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+#legend-volcano .sw { width: 15px; height: 15px; border-radius: 3px; flex: none;
+  border: 1px solid rgba(255,255,255,.2); }
+#legend-volcano .rock { color: var(--ink-dim); font-size: 11px; }
+#legend-volcano .share { margin-left: auto; font-family: var(--mono); font-size: 11px;
+  color: var(--ink-dim); }
+
+/* --- hover tooltip --- */
+#readout { position: absolute; pointer-events: none; z-index: 5;
+  background: rgba(8,9,13,.94); border: 1px solid var(--line); border-radius: 4px;
+  padding: 7px 10px; font: 12px/1.4 var(--mono);
+  transform: translate(14px, 14px); max-width: 260px; }
+#readout .v { color: var(--hot); font-weight: 600; }
+#readout .a { color: var(--ink); }
+#readout .r { color: var(--ink-dim); font-size: 11px; }
+
+/* --- HUD (bottom, always visible) --- */
+#hud { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  width: min(940px, calc(100% - 32px)); z-index: 4;
+  padding: 11px 15px 12px;
+  display: flex; flex-direction: column; gap: 8px; }
+#caption { font-family: var(--serif); font-size: 13.5px; color: var(--ink); min-height: 19px; }
+#caption b { color: var(--hot); font-weight: 600; }
+#statline { display: flex; justify-content: space-between; align-items: baseline;
+  font: 12px var(--mono); color: var(--ink-dim); }
+#frontier { color: var(--ink); }
+#frontier b { color: var(--accent); font-weight: 600; font-size: 14px; }
+#area b { color: var(--ink); font-weight: 600; }
+
+#transport { display: flex; align-items: center; gap: 12px; }
+button#play { background: var(--accent); color: var(--on-accent); border: none;
+  width: 40px; height: 34px; font-size: 15px; flex: none; }
+button#play:hover { filter: brightness(1.08); }
+input#slider { flex: 1; }
+.ctl { font-size: 12px; color: var(--ink-dim); display: flex; align-items: center; gap: 5px; }
+
+#jumps { display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+  border-top: 1px solid var(--line); padding-top: 9px; }
+.grouplabel { font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--ink-dim); margin-right: 2px; }
+#jumps .sep { width: 1px; height: 16px; background: var(--line); margin: 0 4px; }
+#landmarks { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+
+footer#credit { flex: none; color: var(--ink-dim); font-size: 11px;
+  padding: 5px 16px; background: var(--bg); border-top: 1px solid var(--line);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+@media (max-width: 720px) {
+  #titlecard { max-width: 200px; } #titlecard p { display: none; }
+  #legendbox { width: 168px; }
+  .ctl, #jumps .grouplabel { display: none; }
+}

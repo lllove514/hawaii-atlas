@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reef Heat Atlas — Hawaiian Islands</title>
+<link rel="stylesheet" href="../shared/atlas.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <div>
+      <a class="atlas-home" href="../">Hawaiʻi Atlas</a>
+      <h1>Reef Heat Atlas</h1>
+      <p class="sub">Coral-bleaching heat stress, Hawaiian Islands · NOAA Coral Reef Watch 5&nbsp;km daily ·
+         each pixel = one 5&nbsp;km ocean cell</p>
+    </div>
+    <div class="now">
+      <div id="now-date">—</div>
+      <div class="now-span" id="now-span">—</div>
+    </div>
+  </header>
+
+  <div id="stage">
+    <canvas id="map" role="img" aria-label="Map of sea-surface temperature and bleaching heat stress around the Hawaiian Islands"></canvas>
+    <div id="loading"><div class="bar"><span id="loadfill"></span></div><p id="loadtext">Loading…</p></div>
+
+    <div id="readout" class="panel hidden">
+      <div class="ro-date" id="ro-date">—</div>
+      <div class="ro-pos" id="ro-pos">—</div>
+      <div class="ro-row"><span>SST</span><b id="ro-sst">—</b></div>
+      <div class="ro-row"><span>Anomaly</span><b id="ro-anom">—</b></div>
+      <div class="ro-row"><span>DHW</span><b id="ro-dhw">—</b></div>
+      <div class="ro-risk" id="ro-risk">—</div>
+      <canvas id="ro-spark" width="200" height="46"></canvas>
+      <div class="ro-spark-note">DHW at this cell, full record</div>
+    </div>
+
+    <div id="legend" class="panel">
+      <div class="lg-title" id="lg-title">Sea-surface temperature</div>
+      <canvas id="lg-bar" width="228" height="16"></canvas>
+      <div class="lg-ticks" id="lg-ticks"></div>
+      <div class="lg-note" id="lg-note"></div>
+    </div>
+  </div>
+
+  <div id="controls">
+    <button id="play" title="Play / pause (space)">▶</button>
+    <div class="slider-wrap">
+      <input id="scrub" class="scrub" type="range" min="0" max="0" value="0" step="1">
+      <div class="slider-dates"><span id="d-min">—</span><span id="d-max">—</span></div>
+    </div>
+    <div class="events" role="group" aria-label="Bleaching events">
+      <span class="ev-label">Bleaching</span
+      ><button data-year="2014">2014</button
+      ><button data-year="2015">2015</button
+      ><button data-year="2019">2019</button
+      ><button data-year="2020">2020</button>
+    </div>
+    <div class="toggle seg" role="group" aria-label="Layer">
+      <button id="t-sst" class="on">SST</button
+      ><button id="t-anom">Anomaly</button
+      ><button id="t-dhw">DHW</button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

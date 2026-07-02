@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rainfall Gradient Explorer — Hawaiʻi Atlas</title>
+<link rel="stylesheet" href="../shared/atlas.css">
+<style>
+  :root { --accent: #7a96ff; }
+  body { display: flex; align-items: center; justify-content: center; }
+  .placeholder {
+    max-width: 480px; padding: 28px 32px; text-align: left;
+    background:
+      radial-gradient(120% 160% at 10% 0%, rgba(122,150,255,0.14) 0%, transparent 55%),
+      var(--panel);
+  }
+  h1 { font-size: 24px; margin: 10px 0 12px; }
+  p { color: var(--ink-dim); font-size: 14px; line-height: 1.6; margin: 0 0 12px; }
+  .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="placeholder panel">
+    <a class="atlas-home" href="../">Hawaiʻi Atlas</a>
+    <h1>Rainfall Gradient Explorer</h1>
+    <p class="tag">In progress</p>
+    <p>Windward slopes on the islands catch some of the heaviest rainfall on
+       Earth while leeward coasts a few miles away sit in near-desert. This map
+       will trace those gradients &mdash; wettest to driest &mdash; across each
+       island.</p>
+    <p>Until it lands, the other three maps are live from the atlas page.</p>
+  </div>
+</body>
+</html>
