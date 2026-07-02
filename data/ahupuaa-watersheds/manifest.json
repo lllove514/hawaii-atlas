@@ -1,0 +1,25 @@
+{
+  "islands": [
+    {
+      "name": "Oʻahu",
+      "slug": "oahu",
+      "available": true
+    },
+    {
+      "name": "Kauaʻi",
+      "slug": "kauai",
+      "available": false
+    },
+    {
+      "name": "Maui",
+      "slug": "maui",
+      "available": false
+    },
+    {
+      "name": "Hawaiʻi",
+      "slug": "hawaii",
+      "available": false
+    }
+  ],
+  "default": "oahu"
+}

@@ -1,0 +1,64 @@
+{
+  "island": "Oʻahu",
+  "mokupuni": "Oʻahu",
+  "epsg": 32604,
+  "dem_size": [
+    7056,
+    5590
+  ],
+  "web_size": [
+    2200,
+    1743
+  ],
+  "utm_bounds": [
+    572138.7906471986,
+    2348154.660270167,
+    642698.7906471986,
+    2404054.660270167
+  ],
+  "m_per_px": 32.0727,
+  "stream_threshold_cells": 5000,
+  "min_basin_km2": 0.5,
+  "n_ahupuaa": 98,
+  "n_basins_significant": 224,
+  "moku_labels": [
+    {
+      "name": "Kona",
+      "x": 1568.7,
+      "y": 1407.4
+    },
+    {
+      "name": "Koʻolauloa",
+      "x": 1138.0,
+      "y": 447.2
+    },
+    {
+      "name": "Koʻolaupoko",
+      "x": 1572.0,
+      "y": 1081.6
+    },
+    {
+      "name": "Waialua",
+      "x": 671.3,
+      "y": 591.0
+    },
+    {
+      "name": "Waiʻanae",
+      "x": 465.4,
+      "y": 919.7
+    },
+    {
+      "name": "ʻEwa",
+      "x": 1061.6,
+      "y": 1168.7
+    }
+  ],
+  "layers": {
+    "base": "base.png",
+    "basins": "basins.png",
+    "basins_vec": "basins.geojson",
+    "streams": "streams.geojson",
+    "ahupuaa": "ahupuaa.geojson"
+  },
+  "intro": "Ahupuaʻa are traditional Hawaiian land divisions running mauka to makai — ridge to reef — so each holds a full watershed. This map overlays them on stream channels and basins computed from a USGS 10 m elevation model, so you can see where the old boundaries and the actual drainage agree, and where they part."
+}
