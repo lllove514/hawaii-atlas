@@ -23,17 +23,13 @@ program.
 
 ## Viewing the site
 
-Once it's on GitHub Pages, it's just a link, no install:
-
-```
-https://<your-username>.github.io/hawaii-atlas/
-```
+The site is live at [lllove514.github.io/hawaii-atlas](https://lllove514.github.io/hawaii-atlas/), no install.
 
 To run it on your own machine instead, any static file server works, because
 there is no build step:
 
 ```bash
-git clone https://github.com/<your-username>/hawaii-atlas.git
+git clone https://github.com/lllove514/hawaii-atlas.git
 cd hawaii-atlas
 python3 -m http.server 8000
 ```
